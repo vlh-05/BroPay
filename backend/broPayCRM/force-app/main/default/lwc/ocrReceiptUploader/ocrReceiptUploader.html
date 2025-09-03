@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Upload Receipt for OCR">
+        <div class="slds-p-around_medium">
+            <lightning-input type="file" label="Upload Receipt Image" accept="image/*,.pdf" onchange={handleFileChange}></lightning-input>
+            <lightning-button label="Extract & Save" onclick={handleUpload} class="slds-m-top_medium"></lightning-button>
+        </div>
+
+        <template if:true={ocrResult}>
+            <p><strong>OCR Result:</strong></p>
+            <p>{ocrResult}</p>
+        </template>
+    </lightning-card>
+</template>

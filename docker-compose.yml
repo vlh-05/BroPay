@@ -1,0 +1,11 @@
+version: '3'
+services:
+  backend:
+    build: ./broPay-api
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend/bropay-frontend
+    ports:
+      - "5173:5173"
