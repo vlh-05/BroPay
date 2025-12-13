@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Secrets and env files
+.env
+
+# # .gitignore
+# backend/creds/bropay-ocr.json

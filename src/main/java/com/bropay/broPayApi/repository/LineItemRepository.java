@@ -1,9 +1,14 @@
 package com.bropay.broPayApi.repository;
 
-import com.bropay.broPayApi.entity.LineItem;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
-public interface LineItemRepository extends JpaRepository<LineItem, Long> {
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+
+import com.bropay.broPayApi.model.LineItem;
+
+public interface LineItemRepository extends MongoRepository<LineItem, String> {
+
+    @Query("{ 'splitDetails.participantId': ?0 }")
+    List<LineItem> findByParticipantId(String participantId);
 }

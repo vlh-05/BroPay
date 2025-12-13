@@ -1,29 +1,37 @@
 package com.bropay.broPayApi.dto;
 
 public class SplitSummaryDTO {
-    private String participantName;
-    private Double amountOwed;
 
-    public SplitSummaryDTO() {}
+    private String participantEmail;
+    private String amountOwed;
 
-    public SplitSummaryDTO(String participantName, Double amountOwed) {
-        this.participantName = participantName;
+    public SplitSummaryDTO() {
+    }
+
+    public SplitSummaryDTO(String participantEmail, String amountOwed) {
+        this.participantEmail = participantEmail;
         this.amountOwed = amountOwed;
     }
 
-    public String getParticipantName() {
-        return participantName;
+    public SplitSummaryDTO(String participantEmail, double amountOwed) {
+        this.participantEmail = participantEmail;
+        this.amountOwed = String.format("%.2f", amountOwed);
     }
 
-    public void setParticipantName(String participantName) {
-        this.participantName = participantName;
+    public String getParticipantEmail() {
+        return participantEmail;
     }
 
-    public Double getAmountOwed() {
+    public void setParticipantEmail(String participantEmail) {
+        this.participantEmail = participantEmail;
+    }
+
+    public String getAmountOwed() {
         return amountOwed;
     }
 
-    public void setAmountOwed(Double amountOwed) {
+    public void setAmountOwed(String amountOwed) {
         this.amountOwed = amountOwed;
     }
+
 }

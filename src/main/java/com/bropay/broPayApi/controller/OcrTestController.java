@@ -34,37 +34,6 @@ public class OcrTestController {
     @Autowired
     private OcrService ocrService;
 
-    // @GetMapping("/test")
-    // public String testOcr() throws Exception {
-    //     try (InputStream inputStream = getClass().getResourceAsStream("/Receipt1.png")) {
-    //         if (inputStream == null) {
-    //             return "OCR Failed: Image file not found in resources!";
-    //         }
-
-    //         // Copy resource to temporary file
-    //         File tempFile = File.createTempFile("ocr-image", ".png");
-    //         try (OutputStream outStream = new FileOutputStream(tempFile)) {
-    //             inputStream.transferTo(outStream);
-    //         }
-
-    //         // Convert File to MultipartFile
-    //         try (InputStream fileInputStream = new FileInputStream(tempFile)) {
-    //             MultipartFile multipartFile = new MockMultipartFile(
-    //                 tempFile.getName(),
-    //                 tempFile.getName(),
-    //                 "image/png",
-    //                 fileInputStream
-    //             );
-
-    //             return ocrService.extractTextFromImage(multipartFile);
-    //         }
-
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //         return "OCR Failed: " + e.getMessage();
-    //     }
-    // }
-
     @GetMapping("/test")
 public ResponseEntity<Map<String, String>> testOcr() throws Exception{
     Map<String, String> result = new HashMap<>();
@@ -144,40 +113,7 @@ public ResponseEntity<Map<String, String>> testOcr() throws Exception{
             return ResponseEntity.internalServerError().body("OCR Error: " + e.getMessage());
         }
     }
-    // @PostMapping("/parseBase64")
-    // public ResponseEntity<Map<String, Object>> parseBase64(@RequestBody Base64ImageDTO input) {
-    //     String filename = input.getFilename() != null ? input.getFilename() : "image.jpg";
-    //     String contentType = "image/jpeg";
-
-    //     List<LineItemDTO> items = ocrService.extractLineItemsFromBase64(
-    //         input.getBase64Image(), filename, contentType
-    //     );
-
-    //     Map<String, Object> result = new HashMap<>();
-    //     result.put("items", items);
-    //     result.put("totalItems", items != null ? items.size() : 0);
-    //     result.put("extractedItems", items != null ? items.size() : 0);
-
-    //     // ✅ Add totalAmount calculation here
-    //     double totalAmount = 0.0;
-    //     for (LineItemDTO item : items) {
-    //         try {
-    //             String price = item.getPrice().replaceAll("[^0-9.]", "");
-    //             if (!price.isBlank()) {
-    //                 totalAmount += Double.parseDouble(price);
-    //             }
-    //         } catch (Exception ignored) {}
-    //     }
-    //     result.put("totalAmount", totalAmount);
-
-    //     if (items == null || items.isEmpty()) {
-    //         result.put("message", "No line items extracted from the receipt.");
-    //     } else {
-    //         result.put("message", "Line items extracted successfully.");
-    //     }
-
-    //     return ResponseEntity.ok(result);
-    // }
+    
     @PostMapping("/parseBase64")
     public ResponseEntity<Map<String, Object>> parseBase64(@RequestBody Base64ImageDTO input) {
     String filename = input.getFilename() != null ? input.getFilename() : "image.jpg";
@@ -188,4 +124,4 @@ public ResponseEntity<Map<String, String>> testOcr() throws Exception{
     return ResponseEntity.ok(result);
 }
 
-}
+} 

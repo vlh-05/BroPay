@@ -8,26 +8,33 @@ import org.springframework.stereotype.Service;
 import com.bropay.broPayApi.dto.LineItemDTO;
 import com.bropay.broPayApi.dto.ReceiptResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.util.Value;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class OpenAIChatClient {
-    @Autowired
-private OpenAiService openAiService;
 
-    private static final Dotenv dotenv = Dotenv.load();
-    private static final String API_KEY = System.getenv("OPENAI_API_KEY");
+    @Value("${OPENAI_API_KEY}")
+    private String apiKey;
 
-    private static final String ENDPOINT = "https://api.openai.com/v1/chat/completions";
-
+    private OpenAiService openAiService;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    
+    @PostConstruct
+    public void init() {
+        if (apiKey == null) 
+        {
+            apiKey = System.getenv("OPENAI_API_KEY");
+        }
+        System.out.println("🧪 Final OpenAI Key: " + apiKey);
+        openAiService = new OpenAiService(apiKey);
+    }
 
     public List<LineItemDTO> extractLineItemsFromText(String rawText) {
     String prompt = """

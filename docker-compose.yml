@@ -1,11 +1,33 @@
-version: '3'
+version: '3.8'
+
 services:
   backend:
-    build: ./broPay-api
+    build:
+      context: ./
+      dockerfile: backend/Dockerfile
+    env_file:
+    - .env
     ports:
       - "8080:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/bropaydb
+      SPRING_DATA_MONGODB_DATABASE: bropaydb
 
   frontend:
     build: ./frontend/bropay-frontend
     ports:
       - "5173:5173"
+
+  mongodb:
+    image: mongo:6.0
+    container_name: broPay-mongo
+    restart: always
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
