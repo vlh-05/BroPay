@@ -37,3 +37,21 @@ build/
 
 # # .gitignore
 # backend/creds/bropay-ocr.json
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# ======================
+# Docker (ignore runtime artifacts)
+# ======================
+**/docker-data/
+**/docker-volumes/
+**/volumes/
+**/.docker/
+**/.dockerignore
+
+# Docker env files
+.env
+.env.*

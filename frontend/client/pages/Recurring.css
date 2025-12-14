@@ -1,0 +1,436 @@
+/* ===============================
+   PAGE LAYOUT
+================================= */
+
+.recurring-page {
+  padding-top: 32px;
+  max-width: 1120px;
+}
+
+/* Header */
+.recurring-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.recurring-header p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Grid layout */
+.recurring-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 24px;
+  margin-top: 20px;
+}
+
+/* ===============================
+   CARD BASE (Form + Right Panel)
+================================= */
+
+.form-card,
+.list-card {
+  background: #ffffff;
+  padding: 20px 20px 24px;
+  border-radius: 16px;
+  border: 1px solid #e3e6ea;         /* slightly darker for premium look */
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+/* Create recurring title */
+.form-card h2,
+.list-card h2 {
+  margin-bottom: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ===============================
+   FORM FIELDS
+================================= */
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 9px 11px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  color: #111827;
+  background-color: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb33;
+}
+
+/* ===============================
+   END CONDITIONS
+================================= */
+
+.end-condition {
+  margin-top: 6px;
+  margin-bottom: 14px;
+  padding: 12px 12px 10px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.end-header h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.end-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.end-row {
+  font-size: 13px;
+  color: #374151;
+}
+
+.end-row-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.end-input {
+  margin-left: 24px;
+  max-width: 170px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 13px;
+}
+
+/* ===============================
+   PRIMARY BUTTON
+================================= */
+
+.btn-primary {
+  margin-top: 4px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease,
+    transform 0.05s ease;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* ===============================
+   ALERTS
+================================= */
+
+.alert {
+  padding: 9px 11px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.alert-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.alert-success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+/* ===============================
+   TAB BAR (Stripe-style pills)
+================================= */
+
+.tab-bar {
+  display: inline-flex;
+  padding: 3px;
+  background: #f3f4f6;
+  border-radius: 9999px;
+  margin-bottom: 8px;
+}
+
+.tab {
+  border: none;
+  background: transparent;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.tab.active {
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+}
+
+/* small caption under tabs */
+.tab-caption {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #f3f4f6; /* subtle divider for structure */
+}
+
+/* ===============================
+   RIGHT PANEL (Scrollable List)
+================================= */
+
+.list-card {
+  background: #fcfcfd;
+  background-image: radial-gradient(#e5e7eb 1px, transparent 0);
+  background-size: 14px 14px;
+  background-position: -3px -3px;
+}
+
+
+.rec-list-scroll {
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+/* ===============================
+   RECURRING ITEM STYLE
+================================= */
+
+.rec-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 11px 11px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  margin-bottom: 9px;
+  transition: box-shadow 0.15s ease, transform 0.05s ease;
+}
+
+.rec-item:hover {
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+.rec-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.rec-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #111827;
+}
+
+.rec-subline {
+  font-size: 12px;
+  color: #4b5563;
+  margin-bottom: 3px;
+}
+
+.rec-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Status Pills */
+.status-pill {
+  padding: 3px 7px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 10px;
+}
+
+.status-active {
+  background: #defafe;
+  color: #0369a1;
+}
+
+.status-paused {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-ended {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.actions button {
+  border: none;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.actions button:first-child {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.actions button:first-child:hover {
+  background: #1d4ed8;
+}
+
+.actions button:last-child {
+  background: #f97373;
+  color: #ffffff;
+}
+
+.actions button:last-child:hover {
+  background: #b91c1c;
+}
+
+/* ===============================
+   EMPTY STATE
+================================= */
+
+.empty-state {
+  padding: 18px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 12px;   /* smaller for premium look */
+}
+
+/* ===============================
+   SKELETON LOADING
+================================= */
+
+.skeleton-line {
+  height: 8px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 0%,
+    #f3f4f6 50%,
+    #e5e7eb 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  margin-bottom: 6px;
+}
+
+.skeleton-line.short { width: 40%; }
+.skeleton-line.medium { width: 65%; }
+.skeleton-line.long { width: 80%; }
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 900px) {
+  .recurring-grid {
+    grid-template-columns: 1fr;
+  }
+  .list-card {
+    order: -1;
+  }
+}
+
+/* ===============================
+   CREATE MODE TOGGLE (Pay / Receive)
+================================= */
+
+.mode-toggle {
+  display: inline-flex;
+  padding: 3px;
+  background: #f3f4f6;
+  border-radius: 9999px;
+  margin-bottom: 6px;
+}
+
+.mode-btn {
+  border: none;
+  background: transparent;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.mode-btn.active {
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+}
+
+.mode-caption {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 4px 0 10px;
+}

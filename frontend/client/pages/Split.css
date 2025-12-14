@@ -1,0 +1,246 @@
+.split-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.split-form-card {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.split-form-card h2 {
+  font-size: var(--font-size-2xl);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-section {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+}
+
+.form-section h3 {
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group small {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.line-item-row {
+  display: grid;
+  grid-template-columns: 1fr 100px 80px 48px; /* Added consistent space for delete */
+  gap: 12px;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.line-item-row input {
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: var(--font-size-base);
+  height: 38px;
+}
+
+.split-sidebar {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  height: fit-content;
+  position: sticky;
+  top: var(--spacing-lg);
+}
+
+.split-sidebar h2 {
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.participants-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+}
+
+.participant-name {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.participant-email {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.add-participant {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
+}
+
+.add-participant input {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+}
+
+.split-result {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: #d1fae5;
+  border: 1px solid #a7f3d0;
+  border-radius: var(--border-radius);
+}
+
+.split-result h3 {
+  font-size: var(--font-size-base);
+  color: #065f46;
+  margin-bottom: var(--spacing-md);
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid rgba(6, 95, 70, 0.1);
+  color: #065f46;
+  font-size: var(--font-size-sm);
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-amount {
+  font-weight: var(--font-weight-semibold);
+}
+
+@media (max-width: 768px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .split-sidebar {
+    position: static;
+  }
+
+  .line-item-row {
+    grid-template-columns: 1fr 80px auto;
+  }
+}
+
+.line-item-row button:hover {
+  background-color: #dc2626;
+  transform: scale(1.05);
+}
+
+.line-item-row button {
+  width: 38px;
+  height: 38px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+/* ============================
+   💬 Confirmation Modal Styles
+============================ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 24, 39, 0.6); /* dark backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-card {
+  background: #ffffff;
+  padding: 1.75rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  animation: slideUp 0.25s ease;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.75rem;
+}
+
+.modal-text {
+  color: #374151;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

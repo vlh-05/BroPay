@@ -1,0 +1,83 @@
+{
+  "platform": "react",
+  "code": {
+    "lang": "ts",
+    "scheme": "blackbox",
+    "reactRuntime": "classic"
+  },
+  "style": {
+    "scheme": "css-modules",
+    "defaultStyleCssFilePath": "plasmic/plasmic__default_style.module.css"
+  },
+  "images": {
+    "scheme": "inlined",
+    "publicDir": "../public",
+    "publicUrlPrefix": "/static/"
+  },
+  "tokens": {
+    "scheme": "theo",
+    "tokensFilePath": "plasmic-tokens.theo.json"
+  },
+  "srcDir": "components",
+  "defaultPlasmicDir": "./plasmic",
+  "projects": [
+    {
+      "projectId": "rn9AUqq68cNWSobWHzmBeC",
+      "projectName": "BroPay",
+      "version": "latest",
+      "components": [
+        {
+          "id": "IcSM5Ugz_BNY",
+          "name": "Homepage",
+          "type": "managed",
+          "projectId": "rn9AUqq68cNWSobWHzmBeC",
+          "renderModuleFilePath": "plasmic/bro_pay/PlasmicHomepage.tsx",
+          "importSpec": {
+            "modulePath": "Homepage.tsx"
+          },
+          "cssFilePath": "plasmic/bro_pay/PlasmicHomepage.module.css",
+          "scheme": "blackbox",
+          "componentType": "page",
+          "path": "/"
+        }
+      ],
+      "cssFilePath": "plasmic/bro_pay/plasmic.module.css",
+      "globalContextsFilePath": "",
+      "icons": [],
+      "images": [],
+      "indirect": false,
+      "projectModuleFilePath": "plasmic/bro_pay/plasmic.tsx",
+      "splitsProviderFilePath": "",
+      "styleTokensProviderFilePath": "plasmic/bro_pay/PlasmicStyleTokensProvider.tsx",
+      "codeComponents": [
+        {
+          "id": "KAvOlS65XH5R",
+          "name": "PlasmicHead",
+          "displayName": "hostless-plasmic-head",
+          "componentImportPath": "@plasmicapp/react-web"
+        },
+        {
+          "id": "HGh9wbRsXNzj",
+          "name": "Fetcher",
+          "displayName": "plasmic-data-source-fetcher",
+          "componentImportPath": "@plasmicapp/react-web/lib/data-sources"
+        }
+      ],
+      "customFunctions": []
+    }
+  ],
+  "globalVariants": {
+    "variantGroups": [
+      {
+        "id": "AOlWnQTEI7wO",
+        "name": "Screen",
+        "projectId": "rn9AUqq68cNWSobWHzmBeC",
+        "contextFilePath": "plasmic/bro_pay/PlasmicGlobalVariant__Screen.tsx"
+      }
+    ]
+  },
+  "wrapPagesWithGlobalContexts": true,
+  "preserveJsImportExtensions": false,
+  "cliVersion": "0.1.348",
+  "$schema": "https://unpkg.com/@plasmicapp/cli@0.1.348/dist/plasmic.schema.json"
+}
