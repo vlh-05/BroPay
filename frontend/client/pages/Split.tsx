@@ -9,6 +9,7 @@ import { splitAPI, receiptAPI } from "@/services/api";
 import { addSplit } from "@/store/slices/paymentSlice";
 import { addNotification } from "@/store/slices/notificationSlice";
 import "./Split.css";
+import { friendAPI } from "@/services/api";
 import axios from "axios";
 
 /* -----------------------------
@@ -74,7 +75,7 @@ const Split: React.FC = () => {
 
   const [totalAmount, setTotalAmount] = useState("");
   const [participants, setParticipants] = useState<Participant[]>(
-    user ? [{ email: user.email, name: user.name }] : [],
+    user ? [{ email: user.email, name: user.name }] : []
   );
   const [newParticipantEmail, setNewParticipantEmail] = useState("");
   const [newParticipantName, setNewParticipantName] = useState("");
@@ -119,7 +120,7 @@ const Split: React.FC = () => {
                 email: p.email,
                 name: p.name,
               }))
-            : [],
+            : []
         );
 
         setLineItems(
@@ -127,7 +128,7 @@ const Split: React.FC = () => {
             itemName: li.description,
             amount: parseFloat(li.price || "0"),
             quantity: parseInt(li.quantity || "1"),
-          })) || [{ itemName: "", amount: 0 }],
+          })) || [{ itemName: "", amount: 0 }]
         );
 
         if (s.tax) setTaxAmount(s.tax);
@@ -180,7 +181,7 @@ const Split: React.FC = () => {
       splitType === "PERCENTAGE"
         ? participants.reduce((a, p) => a + Number(p.sharePercentage || 0), 0)
         : 0,
-    [splitType, participants],
+    [splitType, participants]
   );
 
   const showPercentageWarning =
@@ -197,10 +198,15 @@ const Split: React.FC = () => {
       return;
     }
 
+    if (!user?.email) {
+      setError("User not authenticated");
+      return;
+    }
+
     const email = newParticipantEmail.trim().toLowerCase();
     const name = newParticipantName.trim();
 
-    // ✅ Avoid duplicates
+    // Avoid duplicates
     const exists = participants.some((p) => p.email.toLowerCase() === email);
     if (exists) {
       setError("Participant already added");
@@ -210,27 +216,38 @@ const Split: React.FC = () => {
     try {
       setError("");
 
-      // ✅ Step 1: Call backend to fetch all friends for current user
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/friends/${user.email}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      // ✅ CORRECT: goes to http://localhost:8080/api/friends/{email}
+      const res = await friendAPI.getFriends(user.email);
 
-      const friends = response.data || [];
+      const friends = Array.isArray(res.data) ? res.data : [];
 
-      // ✅ Step 2: Check if entered email is among user’s accepted friends
-      const isFriend = friends.some((f) => f.email?.toLowerCase() === email);
+      const myEmail = user.email.toLowerCase();
+
+      const friendEmails = friends
+        .map((f: any) => {
+          if (f?.email) return f.email.toLowerCase();
+
+          const req = f?.requester?.email?.toLowerCase();
+          const rec = f?.recipient?.email?.toLowerCase();
+
+          if (req && rec) {
+            return req === myEmail ? rec : rec === myEmail ? req : "";
+          }
+
+          return "";
+        })
+        .filter(Boolean);
+
+      const isFriend = friendEmails.includes(email);
 
       if (!isFriend) {
         setError(
-          "You can only split with friends. This user is not in your friend list.",
+          "You can only split with friends. This user is not in your friend list."
         );
         return;
       }
 
-      // ✅ Step 3: Add participant if authorized
+      // ✅ Add participant
       setParticipants((prev) => [...prev, { email, name }]);
       setNewParticipantEmail("");
       setNewParticipantName("");
@@ -256,7 +273,7 @@ const Split: React.FC = () => {
   const handleUpdateLineItem = (
     idx: number,
     field: keyof LineItem,
-    value: any,
+    value: any
   ) => {
     const updated = [...lineItems];
     if (field === "amount" || field === "quantity") value = Number(value) || 0;
@@ -269,18 +286,55 @@ const Split: React.FC = () => {
   };
 
   const handleReceiptUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     setIsLoading(true);
+    setError("");
+    setSuccess("");
+
     try {
-      const response = await receiptAPI.uploadReceipt(file);
-      if (response.data.lineItems) setLineItems(response.data.lineItems);
-      if (response.data.totalAmount)
-        setTotalAmount(response.data.totalAmount.toString());
+      const res = await receiptAPI.uploadReceipt(file);
+      const data = res.data || {};
+
+      // Backend sends "items" not "lineItems"
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      if (items.length) {
+        const mapped = items.map((it: any) => ({
+          itemName: String(it.description ?? ""),
+          amount: Number(it.price ?? 0),
+          quantity: Number(it.quantity ?? 1),
+        }));
+
+        setLineItems(mapped);
+
+        // subtotal from items
+        const subtotal = mapped.reduce(
+          (sum, x) => sum + (Number(x.amount) || 0),
+          0
+        );
+
+        // If backend gives totalAmount (includes tax), derive tax = total - subtotal
+        if (data.totalAmount != null) {
+          const total = Number(data.totalAmount) || 0;
+          const derivedTax = +(total - subtotal).toFixed(2);
+
+          if (derivedTax > 0) {
+            setTaxAmount(derivedTax.toFixed(2));
+          } else {
+            setTaxAmount("");
+          }
+        }
+
+        // You don't need setTotalAmount, UI uses totalFromLineItems anyway
+      }
+
       setSuccess("✓ Receipt processed successfully!");
-    } catch {
+    } catch (err) {
+      console.error("Receipt processing failed:", err);
       setError("Failed to process receipt. Please try manual entry.");
     } finally {
       setIsLoading(false);
@@ -349,21 +403,21 @@ const Split: React.FC = () => {
         (lineItems[0]?.splitDetails || []).map((d) => [
           d.participantId,
           Number(d.quantity) || 0,
-        ]),
+        ])
       );
 
       // merge into participants
       updatedParticipants = participants.map((p) => ({
         ...p,
         sharePercentage: Number(
-          p.sharePercentage ?? percentMap.get(p.email) ?? 0,
+          p.sharePercentage ?? percentMap.get(p.email) ?? 0
         ),
       }));
 
       // validate percentage total == 100
       const totalPercent = updatedParticipants.reduce(
         (sum, p) => sum + Number(p.sharePercentage || 0),
-        0,
+        0
       );
       if (Math.abs(totalPercent - 100) > 0.001) {
         setError("For percentage split, total must equal 100%.");
@@ -419,7 +473,7 @@ const Split: React.FC = () => {
 
       console.log(
         "🚀 Final Payload Sent to Backend:",
-        JSON.stringify(payload, null, 2),
+        JSON.stringify(payload, null, 2)
       );
 
       // ✅ STEP 4: Call backend
@@ -442,13 +496,13 @@ const Split: React.FC = () => {
 
       const backendTotal = merged.reduce(
         (sum, x) => sum + parseFloat(x.amountOwed),
-        0,
+        0
       );
       console.log(
         "✅ Frontend Total:",
         totalFromLineItems,
         "| Backend Split Total:",
-        backendTotal.toFixed(2),
+        backendTotal.toFixed(2)
       );
 
       setSplitResult(merged);
@@ -501,7 +555,7 @@ const Split: React.FC = () => {
           message: `Split of ${total.toFixed(2)} saved successfully.`,
           read: false,
           timestamp: new Date().toISOString(),
-        }),
+        })
       );
 
       setSuccess("✅ Split saved successfully!");
@@ -707,7 +761,7 @@ const Split: React.FC = () => {
                         {participants.map((p) => {
                           const details = item.splitDetails || [];
                           const existing = details.find(
-                            (d) => d.participantId === p.email,
+                            (d) => d.participantId === p.email
                           );
                           const value =
                             splitType === "PERCENTAGE"
@@ -744,7 +798,7 @@ const Split: React.FC = () => {
                                     const existingDetails =
                                       li.splitDetails || [];
                                     const updated = existingDetails.filter(
-                                      (d) => d.participantId !== p.email,
+                                      (d) => d.participantId !== p.email
                                     );
                                     updated.push({
                                       participantId: p.email,

@@ -3,15 +3,17 @@ package com.bropay.broPayApi.model;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("payments")
 public class Payment {
 
-    @Id
-    private String id;
+    @Indexed
     private String payer;
     private String receiver;
+    @Id
+    private String id;
     private double amount;
     private String status;
     private String paymentMethod;

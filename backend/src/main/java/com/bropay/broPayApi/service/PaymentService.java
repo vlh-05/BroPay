@@ -25,6 +25,8 @@ public class PaymentService {
             return paymentRepository.save(payment);
         }
 
+        payment.setPayer(payment.getPayer().trim().toLowerCase());
+        payment.setReceiver(payment.getReceiver().trim().toLowerCase());
         payment.setStatus("PENDING");
         payment.setTimestamp(LocalDateTime.now()); // ✅ ensure timestamp always set
 
@@ -63,13 +65,15 @@ public class PaymentService {
      * 📤 Fetch all payments made by the payer
      */
     public List<Payment> getPaymentsByPayer(String payer) {
-        return paymentRepository.findByPayer(payer);
+        return paymentRepository.findByPayerOrderByTimestampDesc(
+                payer.trim().toLowerCase());
     }
 
     /**
      * 📥 Fetch all payments received by the receiver
      */
     public List<Payment> getPaymentsByReceiver(String receiver) {
-        return paymentRepository.findByReceiver(receiver);
+        return paymentRepository.findByReceiverOrderByTimestampDesc(
+                receiver.trim().toLowerCase());
     }
 }

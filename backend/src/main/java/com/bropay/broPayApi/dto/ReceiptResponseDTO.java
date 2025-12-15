@@ -9,6 +9,9 @@ public class ReceiptResponseDTO {
     private String message;
     private List<LineItemDTO> items;
 
+    public ReceiptResponseDTO() {
+    }
+
     public ReceiptResponseDTO(List<LineItemDTO> items, double totalAmount, int totalItems) {
         this.items = items;
         this.totalAmount = totalAmount;

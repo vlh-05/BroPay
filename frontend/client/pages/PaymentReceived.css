@@ -1,0 +1,109 @@
+/* ===== Container ===== */
+.payment-received-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ===== Title ===== */
+.payment-received-container h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #111827;
+}
+
+/* ===== Table ===== */
+.payment-received-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.payment-received-table thead {
+  background: #f9fafb;
+}
+
+.payment-received-table th {
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.payment-received-table td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.payment-received-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== Amount ===== */
+.received-amount {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* ===== Status ===== */
+.received-status {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+/* ===== Empty / Error ===== */
+.payment-received-empty {
+  margin-top: 48px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.payment-received-error {
+  margin-bottom: 16px;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+/* ===== Spinner ===== */
+.payment-received-spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #16a34a;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 60px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .payment-received-container {
+    padding: 20px 16px;
+  }
+
+  .payment-received-container h1 {
+    font-size: 22px;
+  }
+
+  .payment-received-table th,
+  .payment-received-table td {
+    padding: 12px;
+    font-size: 13px;
+  }
+}
